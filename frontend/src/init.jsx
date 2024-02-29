@@ -16,7 +16,7 @@ const init = async () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <App />
+        <App />
     </I18nextProvider>
   );
 };
