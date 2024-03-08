@@ -1,19 +1,22 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import { Button, Form, Nav } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Navbar, Nav, Button, Form, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import routes from '../hooks/routes.js'
+import routes from '../hooks/routes.js';
 import axios from 'axios';
-import AuthContext from '../authentication/AuthContext.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn, logOut } from '../slices/authSlice.js';
 
 const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation();
-  const { logIn, logOut } = useContext(AuthContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const authState = useSelector((state) => state.auth)
+  console.log(authState)
+
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -25,53 +28,73 @@ const LoginPage = () => {
       password: '',
     },
     onSubmit: async (values) => {
-      setAuthFailed(false)
-      logOut();
+      setAuthFailed(false);
+      dispatch(logOut());
       try {
         const { data } = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(data))
-        logIn();
+        localStorage.setItem('userId', JSON.stringify(data));
+        dispatch(logIn());
         navigate(routes.linkToChat);
-      } catch(error) {
+      } catch (error) {
         console.log(error);
         setAuthFailed(true);
       }
-    }
-  })
+    },
+  });
   return (
     <div>
-      <h1>{t('enter')}</h1>
-      <Form onSubmit={formik.handleSubmit}>
-        <Form.Group>
-        <Form.Control 
-          type='username' 
-          name='username' 
-          placeholder={t('yourNickname')} 
-          required
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          isInvalid={authFailed}
-          ref={inputRef}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control 
-            type='password' 
-            name='password' 
-            placeholder={t('password')} 
-            required
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            isInvalid={authFailed}
-          />
-        </Form.Group>
-        <Button type='submit' variant="outline-primary" >{t('enter')}</Button>
-      </Form>
-      <div>
-        <span>{`${t('noAccount')}?`}</span><Nav.Link as={Link} to="/signup">Page Two</Nav.Link>
-      </div>
+      <Navbar className='bg-body-tertiary justify-content-between'>
+        <Nav.Link as={Link} to={routes.linkToChat}>
+          Hexlet Chat
+        </Nav.Link>
+      </Navbar>
+      <Card style={{ minWidth: '18rem', maxWidth: '50rem', margin: '2rem' }}>
+        <Card.Body>
+          <Card.Title className='card-title text-center mb-4'>
+            {t('logIn')}
+          </Card.Title>
+          <Form onSubmit={formik.handleSubmit} className='col-12 col-md-6 mb-4'>
+            <Form.Group>
+              <Form.Control
+                className='mb-3'
+                type='username'
+                name='username'
+                placeholder={t('yourNickname')}
+                required
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                isInvalid={authFailed}
+                ref={inputRef}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                className='mb-3'
+                type='password'
+                name='password'
+                placeholder={t('password')}
+                required
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                isInvalid={authFailed}
+              />
+            </Form.Group>
+            <Button
+              type='submit'
+              className='w-100 mb-3'
+              variant='outline-primary'
+            >
+              {t('logIn')}
+            </Button>
+          </Form>
+          <div className='card-footer text-center'>
+            <span>{t('noAccount')}? </span>
+            <a href={routes.lintToSignup}>{t('registration')}</a>
+          </div>
+        </Card.Body>
+      </Card>
     </div>
-  )
-}
+  );
+};
 
 export default LoginPage;

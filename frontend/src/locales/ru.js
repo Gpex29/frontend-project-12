@@ -1,10 +1,12 @@
 const ru = {
   translation: {
-    enter: 'Войти',
+    logIn: 'Войти',
+    logOut: 'Выйти',
     yourNickname: 'Ваш ник',
     password: 'Пароль',
     noAccount: 'Нет аккаунта',
     registration: 'Регистрация',
+    channels: 'Каналы',
     errorPage: {
       notFoundPage: 'Страница не найдена',
       youCanPass: 'Но вы можете перейти',

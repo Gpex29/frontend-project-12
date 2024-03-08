@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import routes from '../hooks/routes.js';
-import getNormalized from '../utilities/getNormalized.js';
-import { actions as channelsActions } from '../slices/channelsSlice.js';
-import { actions as messagesActions } from '../slices/messagesSlice.js';
+import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import AuthContext from '../authentication/AuthContext.jsx';
+import Channels from './chatComponents/Channels.jsx';
+import Messages from './chatComponents/Messages.jsx';
+import { getChannels } from '../slices/channelsSlice.js';
+import { getMessages } from '../slices/messagesSlice.js';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -15,27 +19,44 @@ const getAuthHeader = () => {
 
   return {};
 };
-
 const ChatPage = () => {
-  const dispatch = useDispatch;
-  useEffect(() => {
-    const fetchContent = async () => {
-      const channelsPromise = axios.get(routes.channelsPath(), { headers: getAuthHeader() });
-      const messagesPromise = axios.get(routes.messagesPath(), { headers: getAuthHeader() });
-      const [channelsResponse, messagesResponse] = await Promise.all([channelsPromise, messagesPromise]);
-      const channels = getNormalized(channelsResponse.data);
-      const messages = getNormalized(messagesResponse.data);
-      dispatch(channelsActions.addChannels(channels));
-      dispatch(messagesActions.addMessages(messages));
-    };
+  const dispatch = useDispatch();
+  const { logOut } = useContext(AuthContext);
+  const { t } = useTranslation();
+  const [currentChannelId, setCurrentChannelId] = useState('1');
+  const onClick = (id) => setCurrentChannelId(id);
 
-    fetchContent();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    dispatch(getChannels(getAuthHeader()));
+    dispatch(getMessages(getAuthHeader()));
+    setIsLoading(false);
   }, []);
+
   return (
-    <div>
-      <h1>Chat</h1>
+    <div className='d-flex flex-column vh-100'>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <Navbar className='bg-body-tertiary justify-content-between p-3'>
+            <Nav.Link as={Link} to={routes.linkToChat}>
+              Hexlet Chat
+            </Nav.Link>
+            <Button type='button' className='btn btn-primary' onClick={logOut}>
+              {t('logOut')}
+            </Button>
+          </Navbar>
+          <div className='d-flex flex-row h-100 m-4 border'>
+            <Channels currentChannelId={currentChannelId} onClick={onClick} />
+            {<Messages currentChannelId={currentChannelId} />}
+          </div>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default ChatPage;
