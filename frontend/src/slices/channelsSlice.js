@@ -15,14 +15,21 @@ export const getChannels = createAsyncThunk(
     return response.data;
   },
 )
+
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
+  reducers: {
+    addChannel: channelsAdapter.addOne,
+    removeChannel: channelsAdapter.removeOne,
+    updateChannel: channelsAdapter.updateOne,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getChannels.fulfilled, channelsAdapter.addMany)
   },
 });
-export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 
+export const { actions } = channelsSlice;
+export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export default channelsSlice.reducer;

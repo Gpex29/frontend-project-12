@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import routes from '../hooks/routes.js';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logIn, logOut } from '../slices/authSlice.js';
 
 const LoginPage = () => {
@@ -14,8 +14,6 @@ const LoginPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authState = useSelector((state) => state.auth)
-  console.log(authState)
 
   const inputRef = useRef();
   useEffect(() => {
@@ -43,7 +41,7 @@ const LoginPage = () => {
   });
   return (
     <div>
-      <Navbar className='bg-body-tertiary justify-content-between'>
+      <Navbar className='bg-body-tertiary justify-content-between p-3'>
         <Nav.Link as={Link} to={routes.linkToChat}>
           Hexlet Chat
         </Nav.Link>
@@ -51,7 +49,7 @@ const LoginPage = () => {
       <Card style={{ minWidth: '18rem', maxWidth: '50rem', margin: '2rem' }}>
         <Card.Body>
           <Card.Title className='card-title text-center mb-4'>
-            {t('logIn')}
+            {t('logInPage.logIn')}
           </Card.Title>
           <Form onSubmit={formik.handleSubmit} className='col-12 col-md-6 mb-4'>
             <Form.Group>
@@ -59,7 +57,7 @@ const LoginPage = () => {
                 className='mb-3'
                 type='username'
                 name='username'
-                placeholder={t('yourNickname')}
+                placeholder={t('logInPage.nicknameInput')}
                 required
                 value={formik.values.username}
                 onChange={formik.handleChange}
@@ -79,17 +77,18 @@ const LoginPage = () => {
                 isInvalid={authFailed}
               />
             </Form.Group>
+            {authFailed && <div className='text-danger'>{t('logInPage.error')}</div>}
             <Button
               type='submit'
               className='w-100 mb-3'
               variant='outline-primary'
             >
-              {t('logIn')}
+              {t('logInPage.logIn')}
             </Button>
           </Form>
           <div className='card-footer text-center'>
-            <span>{t('noAccount')}? </span>
-            <a href={routes.lintToSignup}>{t('registration')}</a>
+            <span>{t('logInPage.noAccount')}? </span>
+            <Link as={Link} to={routes.lintToSignup}>{t('registration')}</Link>
           </div>
         </Card.Body>
       </Card>

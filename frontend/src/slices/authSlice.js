@@ -2,7 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const authAdapter = createEntityAdapter();
 
-const initialState = { authHeader: {}, loggedIn: false };
+const initialState = { loggedIn: false };
 
 const authSlice = createSlice({
   name: 'auth',
@@ -14,17 +14,9 @@ const authSlice = createSlice({
     logOut: (state) => {
       state.loggedIn = false;
       state.authHeader = {};
+      state.username = null;
     },
-    getAuthHeader: (state) => {
-      state.loggedIn = false;
-      const userId = JSON.parse(localStorage.getItem('userId'));
-      if (userId && userId.token) {
-        state.loggedIn = true;
-        state.authHeader = { Authorization: `Bearer ${userId.token}` }
-      }
-        state.authHeader = {};
-    },
-  },
+  }
 });
 
 export const { logIn, logOut } = authSlice.actions;

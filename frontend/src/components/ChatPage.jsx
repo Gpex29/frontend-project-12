@@ -1,30 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import routes from '../hooks/routes.js';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import AuthContext from '../authentication/AuthContext.jsx';
-import Channels from './chatComponents/Channels.jsx';
-import Messages from './chatComponents/Messages.jsx';
+import Channels from './chatComponents/ChannelsContainer.jsx';
+import Messages from './chatComponents/MessagesContainer.jsx';
 import { getChannels } from '../slices/channelsSlice.js';
 import { getMessages } from '../slices/messagesSlice.js';
+import { logOut } from '../slices/authSlice.js';
+import getAuthHeader from '../utilities/getAuthHeader.js';
+import { io } from 'socket.io-client';
+import * as filter from 'leo-profanity';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
+const socket = io('http://localhost:3000/');
 
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-
-  return {};
-};
 const ChatPage = () => {
+  filter.add(filter.getDictionary('ru'));
   const dispatch = useDispatch();
-  const { logOut } = useContext(AuthContext);
   const { t } = useTranslation();
   const [currentChannelId, setCurrentChannelId] = useState('1');
-  const onClick = (id) => setCurrentChannelId(id);
+  const chooseChannel = (id = '1') => setCurrentChannelId(id);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,28 +30,42 @@ const ChatPage = () => {
     dispatch(getMessages(getAuthHeader()));
     setIsLoading(false);
   }, []);
+  const quit = () => dispatch(logOut());
 
   return (
-    <div className='d-flex flex-column vh-100'>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <Navbar className='bg-body-tertiary justify-content-between p-3'>
-            <Nav.Link as={Link} to={routes.linkToChat}>
-              Hexlet Chat
-            </Nav.Link>
-            <Button type='button' className='btn btn-primary' onClick={logOut}>
-              {t('logOut')}
-            </Button>
-          </Navbar>
-          <div className='d-flex flex-row h-100 m-4 border'>
-            <Channels currentChannelId={currentChannelId} onClick={onClick} />
-            {<Messages currentChannelId={currentChannelId} />}
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <div className='d-flex flex-column vh-100'>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <Navbar className='bg-body-tertiary justify-content-between p-3'>
+              <Nav.Link as={Link} to={routes.linkToChat}>
+                Hexlet Chat
+              </Nav.Link>
+              <Button type='button' className='btn btn-primary' onClick={quit}>
+                {t('logOut')}
+              </Button>
+            </Navbar>
+            <div className='d-flex flex-row h-100 m-4 border'>
+              <Channels
+                currentChannelId={currentChannelId}
+                chooseChannel={chooseChannel}
+                socket={socket}
+                filter={filter}
+              />
+              {
+                <Messages
+                  currentChannelId={currentChannelId}
+                  socket={socket}
+                  filter={filter}
+                />
+              }
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

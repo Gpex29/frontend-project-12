@@ -1,4 +1,4 @@
-import React/* , { useContext } */ from 'react';
+import React from 'react';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import resources from './locales/index.js';
@@ -11,17 +11,18 @@ import {
 } from 'react-router-dom';
 import ErrorPage from './components/ErrorPage.jsx';
 import SignupPage from './components/SignupPage.jsx';
-import AuthProvider from './authentication/AuthProvider.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import ChatPage from './components/ChatPage.jsx';
 import routes from './hooks/routes.js';
-//import AuthContext from './authentication/AuthContext.jsx';
 import { Provider, useSelector } from 'react-redux';
 import store from './slices/index.js';
+import { ToastContainer } from 'react-toastify';
+import { injectStyle } from 'react-toastify/dist/inject-style';
+
+injectStyle();
 
 const ChatRoute = ({ children }) => {
-  //const { loggedIn } = useContext(AuthContext);
-  const { loggedIn } = useSelector((state) => state.auth)
+  const { loggedIn } = useSelector((state) => state.auth);
   const location = useLocation();
   return loggedIn ? (
     children
@@ -41,8 +42,7 @@ const App = async () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-    <Provider store={store}>
-      <AuthProvider>
+      <Provider store={store}>
         <BrowserRouter>
           <Routes>
             <Route path={linkToLogin} element={<LoginPage />} />
@@ -57,9 +57,21 @@ const App = async () => {
             />
             <Route path='*' element={<ErrorPage />} />
           </Routes>
+          <ToastContainer
+            position='top-right'
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme='light'
+          />
+          <ToastContainer />
         </BrowserRouter>
-      </AuthProvider>
-                  </Provider>
+      </Provider>
     </I18nextProvider>
   );
 };
