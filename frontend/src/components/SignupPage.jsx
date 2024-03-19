@@ -121,7 +121,7 @@ const SignUpPage = () => {
               className='w-100 mb-3'
               variant='outline-primary'
             >
-              {t('registrate')}
+              {t('signUpPage.registrate')}
             </Button>
           </Form>
         </Card.Body>
