@@ -18,6 +18,7 @@ import { Provider, useSelector } from 'react-redux';
 import store from './slices/index.js';
 import { ToastContainer } from 'react-toastify';
 import { injectStyle } from 'react-toastify/dist/inject-style';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 injectStyle();
 
@@ -39,40 +40,48 @@ const App = async () => {
     fallbackLng: 'ru',
   });
   const { linkToChat, linkToLogin, lintToSignup } = routes;
+  const rollbarConfig = {
+    accessToken: 'f0dadba7b40443728eba62dc65c3d73d',
+    environment: 'testenv',
+  };
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path={linkToLogin} element={<LoginPage />} />
-            <Route path={lintToSignup} element={<SignupPage />} />
-            <Route
-              path={linkToChat}
-              element={
-                <ChatRoute>
-                    <ChatPage />
-                </ChatRoute>
-              }
-            />
-            <Route path='*' element={<ErrorPage />} />
-          </Routes>
-          <ToastContainer
-            position='top-right'
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme='light'
-          />
-          <ToastContainer />
-        </BrowserRouter>
-      </Provider>
-    </I18nextProvider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <BrowserRouter>
+              <Routes>
+                <Route path={linkToLogin} element={<LoginPage />} />
+                <Route path={lintToSignup} element={<SignupPage />} />
+                <Route
+                  path={linkToChat}
+                  element={
+                    <ChatRoute>
+                      <ChatPage />
+                    </ChatRoute>
+                  }
+                />
+                <Route path='*' element={<ErrorPage />} />
+              </Routes>
+              <ToastContainer
+                position='top-right'
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme='light'
+              />
+              <ToastContainer />
+            </BrowserRouter>
+          </Provider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
