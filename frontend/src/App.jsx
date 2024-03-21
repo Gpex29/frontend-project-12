@@ -40,14 +40,20 @@ const App = async () => {
     fallbackLng: 'ru',
   });
   const { linkToChat, linkToLogin, lintToSignup } = routes;
+
   const rollbarConfig = {
     accessToken: 'f0dadba7b40443728eba62dc65c3d73d',
     environment: 'testenv',
   };
+  function TestError() {
+    const a = null
+    return a.hello()
+  }
 
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
+        <TestError />
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
             <BrowserRouter>
