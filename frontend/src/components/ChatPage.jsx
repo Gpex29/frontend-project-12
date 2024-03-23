@@ -13,23 +13,30 @@ import getAuthHeader from '../utilities/getAuthHeader.js';
 import { io } from 'socket.io-client';
 import * as filter from 'leo-profanity';
 
-const socket = io('http://localhost:3000/');
-
 const ChatPage = () => {
-  filter.add(filter.getDictionary('ru'));
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const [currentChannelId, setCurrentChannelId] = useState('1');
-  const chooseChannel = (id = '1') => setCurrentChannelId(id);
-
+  const [socket, setSocket] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  filter.add(filter.getDictionary('ru'));
+
+  const dispatch = useDispatch();
   useEffect(() => {
     setIsLoading(true);
     dispatch(getChannels(getAuthHeader()));
     dispatch(getMessages(getAuthHeader()));
     setIsLoading(false);
+    const newSocket = io('http://localhost:3000/');
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
+  const { t } = useTranslation();
+  const [currentChannelId, setCurrentChannelId] = useState('1');
+  const chooseChannel = (id = '1') => setCurrentChannelId(id);
+
+  
   const quit = () => dispatch(logOut());
 
   return (

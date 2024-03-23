@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import PlusSquare from '../../svg/PlusSquare';
 import cn from 'classnames';
 import { actions, selectors } from '../../slices/channelsSlice';
 import RenderModal from '../modals/RenderModal';
@@ -53,7 +52,7 @@ const Channels = ({ currentChannelId, chooseChannel, socket, filter }) => {
           className='p-0 btn btn-group-vertical bg-light border-0'
           onClick={() => showModal('adding')}
         >
-          <PlusSquare />
+          {t('chatPage.addButton')}
         </Button>
       </div>
       <ul id='channels-box' className='mb-3 px-2 h-100'>

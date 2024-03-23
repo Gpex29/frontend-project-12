@@ -24,6 +24,7 @@ const ru = {
     },
     chatPage: {
       channels: 'Каналы',
+      addButton: '+',
       rename: 'Переименовать',
       messageInput: 'Введите сообщение...',
       messagesCounter: {
