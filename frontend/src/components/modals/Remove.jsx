@@ -31,7 +31,7 @@ const Remove = ({ onHide, modalInfo }) => {
         <form onSubmit={handleSubmit} className="d-flex justify-content-end">
           <FormGroup>
             <input
-              type="submit"
+              type="button"
               onClick={onHide}
               className="btn btn-secondary mt-2 me-2"
               value={t('modals.cancel')}

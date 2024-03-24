@@ -58,7 +58,7 @@ const Rename = ({ onHide, modalInfo }) => {
           </FormGroup>
           <FormGroup className="d-flex justify-content-end">
             <button
-              type="submit"
+              type="button"
               onClick={onHide}
               className="btn btn-secondary mt-2 me-2"
             >

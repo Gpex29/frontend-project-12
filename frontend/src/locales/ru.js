@@ -4,6 +4,8 @@ const ru = {
     password: 'Пароль',
     registration: 'Регистрация',
     remove: 'Удалить',
+    notFoundPage: 'Страница не найдена',
+    loading: 'Загрузка...',
     toasts: {
       addChannel: 'Канал создан',
       renameChannel: 'Канал переименован',

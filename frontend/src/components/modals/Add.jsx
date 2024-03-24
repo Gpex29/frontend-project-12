@@ -56,7 +56,7 @@ const Add = ({ onHide }) => {
           </FormGroup>
           <div className="d-flex justify-content-end">
             <input
-              type="submit"
+              type="button"
               onClick={onHide}
               className="btn btn-primary mt-2 me-2"
               value={t('modals.cancel')}

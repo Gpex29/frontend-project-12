@@ -26,7 +26,7 @@ const ChatPage = () => {
     dispatch(getChannels(getAuthHeader()));
     dispatch(getMessages(getAuthHeader()));
     setIsLoading(false);
-    const newSocket = io('http://localhost:3000/');
+    const newSocket = io();
     setSocket(newSocket);
 
     return () => {
@@ -42,7 +42,7 @@ const ChatPage = () => {
   return (
     <div className="d-flex flex-column vh-100">
       {isLoading ? (
-        <p>Loading...</p>
+        null
       ) : (
         <>
           <Navbar className="bg-body-tertiary justify-content-between p-3">

@@ -9,7 +9,7 @@ import { selectors, actions } from '../../slices/messagesSlice.js';
 import routes from '../../hooks/routes.js';
 
 const Messages = ({ currentChannelId, socket, filter }) => {
-  const inputEl = useRef();
+  const messagesInput = useRef();
   const dispatch = useDispatch();
   const { username } = JSON.parse(localStorage.getItem('userId'));
   const { t } = useTranslation();
@@ -24,7 +24,6 @@ const Messages = ({ currentChannelId, socket, filter }) => {
     axios.post(routes.messagesPath(), newMessage, {
       headers: authHeader,
     });
-    inputEl.current.focus();
     setText('');
   };
 
@@ -32,7 +31,15 @@ const Messages = ({ currentChannelId, socket, filter }) => {
     socket.on('newMessage', (newMessage) => {
       dispatch(actions.addMessage(newMessage));
     });
-    inputEl.current.focus();
+    socket.on('newChannel', () => {
+      messagesInput.current.focus();
+    });
+    socket.on('removeChannel', () => {
+      messagesInput.current.focus();
+    });
+    socket.on('renameChannel', () => {
+      messagesInput.current.focus();
+    });
   }, []);
 
   const channels = useSelector((state) => state.channels);
@@ -68,7 +75,7 @@ const Messages = ({ currentChannelId, socket, filter }) => {
               value={text}
               onChange={handleChange}
               style={{ width: '90%' }}
-              ref={inputEl}
+              ref={messagesInput}
               placeholder={t('chatPage.messageInput')}
             />
             <button type="submit" disabled={!(text.length > 0)} aria-label="messageButton"><ArrowSquare /></button>

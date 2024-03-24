@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { Button, Dropdown, SplitButton } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
@@ -59,43 +59,48 @@ const Channels = ({
           {t('chatPage.addButton')}
         </Button>
       </div>
-      <ul id="channels-box" className="mb-3 px-2 h-100">
+      <ul id="channels-box" className="mb-3 px-2 h-100 d-flex flex-column ">
         {channels.map(({ id, name, removable }) => (
-          <li key={id} style={{ listStyle: 'none' }}>
-            <button
-              type="button"
-              id={id}
-              className={cn(buttonClasses, {
-                'btn-secondary': currentChannelId === id,
-              })}
-              onClick={() => chooseChannel(id)}
-            >
-              #
-              {' '}
-              {name}
-            </button>
-            {removable && (
-              <Dropdown as={ButtonGroup}>
-                <Dropdown.Toggle
-                  split
-                  variant="success"
-                  id="dropdown-custom-2"
-                />
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    eventKey="1"
-                    onClick={() => showModal('removing', { id })}
-                  >
-                    {t('remove')}
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    eventKey="2"
-                    onClick={() => showModal('renaming', { id })}
-                  >
-                    {t('chatPage.rename')}
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+          <li
+            key={id}
+            style={{ listStyle: 'none' }}
+          >
+            {!removable ? (
+              <button
+                type="button"
+                id={id}
+                className={cn(buttonClasses, {
+                  'btn-secondary': currentChannelId === id,
+                })}
+                onClick={() => chooseChannel(id)}
+              >
+                #
+                {' '}
+                {name}
+              </button>
+            ) : (
+              <SplitButton
+                id={id}
+                variant={currentChannelId === id ? 'secondary' : 'light'}
+                title={` #${name}`}
+                className={cn(buttonClasses, {
+                  'btn-secondary': currentChannelId === id,
+                })}
+                onClick={() => chooseChannel(id)}
+              >
+                <Dropdown.Item
+                  eventKey="1"
+                  onClick={() => showModal('removing', { id })}
+                >
+                  {t('remove')}
+                </Dropdown.Item>
+                <Dropdown.Item
+                  eventKey="2"
+                  onClick={() => showModal('renaming', { id })}
+                >
+                  {t('chatPage.rename')}
+                </Dropdown.Item>
+              </SplitButton>
             )}
           </li>
         ))}
