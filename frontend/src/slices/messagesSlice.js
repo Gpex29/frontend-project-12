@@ -15,7 +15,7 @@ export const getMessages = createAsyncThunk(
     });
     return response.data;
   },
-)
+);
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
@@ -29,7 +29,7 @@ const messagesSlice = createSlice({
         const channelId = action.payload;
         const restEntities = Object.values(state.entities).filter((e) => e.channelId !== channelId);
         messagesAdapter.setAll(state, restEntities);
-      })
+      });
   },
 });
 

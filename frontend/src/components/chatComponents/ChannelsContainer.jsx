@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +8,9 @@ import { actions, selectors } from '../../slices/channelsSlice';
 import RenderModal from '../modals/RenderModal';
 import getToast from '../../utilities/getToast';
 
-const Channels = ({ currentChannelId, chooseChannel, socket, filter }) => {
+const Channels = ({
+  currentChannelId, chooseChannel, socket, filter,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
@@ -37,7 +40,7 @@ const Channels = ({ currentChannelId, chooseChannel, socket, filter }) => {
           changes: {
             name: filtredName,
           },
-        })
+        }),
       );
     });
   }, []);
@@ -45,44 +48,48 @@ const Channels = ({ currentChannelId, chooseChannel, socket, filter }) => {
   const buttonClasses = ['btn', 'text-start', 'w-100', 'rounded-0', 'light'];
 
   return (
-    <div className='d-flex flex-column border' style={{ width: '20%' }}>
-      <div className='mt-1 d-flex justify-content-between mb-2 ps-2 pe-2'>
+    <div className="d-flex flex-column border" style={{ width: '20%' }}>
+      <div className="mt-1 d-flex justify-content-between mb-2 ps-2 pe-2">
         <b>{t('chatPage.channels')}</b>
         <Button
-          className='p-0 btn btn-group-vertical bg-light border-0'
+          variant="outline-primary"
+          className="btn"
           onClick={() => showModal('adding')}
         >
           {t('chatPage.addButton')}
         </Button>
       </div>
-      <ul id='channels-box' className='mb-3 px-2 h-100'>
+      <ul id="channels-box" className="mb-3 px-2 h-100">
         {channels.map(({ id, name, removable }) => (
           <li key={id} style={{ listStyle: 'none' }}>
             <button
+              type="button"
               id={id}
               className={cn(buttonClasses, {
                 'btn-secondary': currentChannelId === id,
               })}
               onClick={() => chooseChannel(id)}
             >
-              # {name}
+              #
+              {' '}
+              {name}
             </button>
             {removable && (
               <Dropdown as={ButtonGroup}>
                 <Dropdown.Toggle
                   split
-                  variant='success'
-                  id='dropdown-custom-2'
+                  variant="success"
+                  id="dropdown-custom-2"
                 />
-                <Dropdown.Menu >
+                <Dropdown.Menu>
                   <Dropdown.Item
-                    eventKey='1'
+                    eventKey="1"
                     onClick={() => showModal('removing', { id })}
                   >
                     {t('remove')}
                   </Dropdown.Item>
                   <Dropdown.Item
-                    eventKey='2'
+                    eventKey="2"
                     onClick={() => showModal('renaming', { id })}
                   >
                     {t('chatPage.rename')}

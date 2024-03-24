@@ -14,7 +14,7 @@ export const getChannels = createAsyncThunk(
     });
     return response.data;
   },
-)
+);
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -26,7 +26,7 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getChannels.fulfilled, channelsAdapter.addMany)
+      .addCase(getChannels.fulfilled, channelsAdapter.addMany);
   },
 });
 
