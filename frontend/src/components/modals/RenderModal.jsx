@@ -1,4 +1,4 @@
-import getModal from '../modals';
+import getModal from '.';
 
 const RenderModal = ({ modalInfo, hideModal }) => {
   if (!modalInfo.type) {

@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { Modal, FormGroup, FormControl, Form } from 'react-bootstrap';
+import {
+  Modal, FormGroup, FormControl, Form,
+} from 'react-bootstrap';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
-import { useTranslation } from 'react-i18next';
 
 const Add = ({ onHide }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const inputRef = useRef();
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const Add = ({ onHide }) => {
 
   const formik = useFormik({
     initialValues: { name: '' },
-    onSubmit: 
+    onSubmit:
     (values) => {
       const channel = { name: values.name };
       axios.post(routes.channelsPath(), channel, {
@@ -44,24 +46,24 @@ const Add = ({ onHide }) => {
               onBlur={formik.handleBlur}
               value={formik.values.name}
               isInvalid={formik.submitForm && formik.errors.name}
-              name='name'
+              name="name"
             />
             {formik.touched.name && formik.errors.name && (
-              <Form.Control.Feedback type='invalid'>
+              <Form.Control.Feedback type="invalid">
                 {formik.errors.name}
               </Form.Control.Feedback>
             )}
           </FormGroup>
-          <div className='d-flex justify-content-end'>
+          <div className="d-flex justify-content-end">
             <input
-              type='submit'
+              type="submit"
               onClick={onHide}
-              className='btn btn-primary mt-2 me-2'
+              className="btn btn-primary mt-2 me-2"
               value={t('modals.cancel')}
             />
             <input
-              type='submit'
-              className='btn btn-primary mt-2 me-2'
+              type="submit"
+              className="btn btn-primary mt-2 me-2"
               value={t('modals.send')}
             />
           </div>

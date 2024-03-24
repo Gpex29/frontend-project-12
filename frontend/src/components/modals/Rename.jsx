@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
-import { Modal, FormGroup, FormControl, Form } from 'react-bootstrap';
+import {
+  Modal, FormGroup, FormControl, Form,
+} from 'react-bootstrap';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import routes from '../../hooks/routes';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
-import { useTranslation } from 'react-i18next';
 
 const Rename = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
@@ -46,23 +48,25 @@ const Rename = ({ onHide, modalInfo }) => {
               onBlur={formik.handleBlur}
               value={formik.values.name}
               isInvalid={formik.touched.name && formik.errors.name}
-              name='name'
+              name="name"
             />
             {formik.touched.name && formik.errors.name && (
-              <Form.Control.Feedback type='invalid'>
+              <Form.Control.Feedback type="invalid">
                 {formik.errors.name}
               </Form.Control.Feedback>
             )}
           </FormGroup>
-          <FormGroup className='d-flex justify-content-end'>
+          <FormGroup className="d-flex justify-content-end">
             <button
-              type='submit'
+              type="submit"
               onClick={onHide}
-              className='btn btn-secondary mt-2 me-2'
-            >{t('modals.cancel')}</button>
+              className="btn btn-secondary mt-2 me-2"
+            >
+              {t('modals.cancel')}
+            </button>
             <input
-              type='submit'
-              className='btn btn-primary mt-2'
+              type="submit"
+              className="btn btn-primary mt-2"
               value={t('modals.send')}
             />
           </FormGroup>
