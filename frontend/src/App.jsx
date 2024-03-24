@@ -1,6 +1,7 @@
 import React from 'react';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import resources from './locales/index.js';
 import {
   BrowserRouter,
   Routes,
@@ -8,17 +9,16 @@ import {
   Navigate,
   useLocation,
 } from 'react-router-dom';
-import { Provider, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-import { injectStyle } from 'react-toastify/dist/inject-style';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import resources from './locales/index.js';
 import ErrorPage from './components/ErrorPage.jsx';
 import SignupPage from './components/SignupPage.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import ChatPage from './components/ChatPage.jsx';
 import routes from './hooks/routes.js';
+import { Provider, useSelector } from 'react-redux';
 import store from './slices/index.js';
+import { ToastContainer } from 'react-toastify';
+import { injectStyle } from 'react-toastify/dist/inject-style';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 injectStyle();
 
@@ -28,7 +28,7 @@ const ChatRoute = ({ children }) => {
   return loggedIn ? (
     children
   ) : (
-    <Navigate to="/login" state={{ from: location }} />
+    <Navigate to='/login' state={{ from: location }} />
   );
 };
 
@@ -57,16 +57,16 @@ const App = async () => {
                 <Route path={lintToSignup} element={<SignupPage />} />
                 <Route
                   path={linkToChat}
-                  element={(
+                  element={
                     <ChatRoute>
                       <ChatPage />
                     </ChatRoute>
-                  )}
+                  }
                 />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path='*' element={<ErrorPage />} />
               </Routes>
               <ToastContainer
-                position="top-right"
+                position='top-right'
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
@@ -75,7 +75,7 @@ const App = async () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                theme="light"
+                theme='light'
               />
               <ToastContainer />
             </BrowserRouter>

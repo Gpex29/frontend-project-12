@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Navbar, Nav, Button, Form, Card,
-} from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { Navbar, Nav, Button, Form, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import routes from '../hooks/routes.js';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import routes from '../hooks/routes.js';
 import { logIn, logOut } from '../slices/authSlice.js';
 
 const LoginPage = () => {
@@ -42,22 +41,22 @@ const LoginPage = () => {
   });
   return (
     <div>
-      <Navbar className="bg-body-tertiary justify-content-between p-3">
+      <Navbar className='bg-body-tertiary justify-content-between p-3'>
         <Nav.Link as={Link} to={routes.linkToChat}>
           Hexlet Chat
         </Nav.Link>
       </Navbar>
       <Card style={{ minWidth: '18rem', maxWidth: '50rem', margin: '2rem' }}>
         <Card.Body>
-          <Card.Title className="card-title text-center mb-4">
+          <Card.Title className='card-title text-center mb-4'>
             {t('logInPage.logIn')}
           </Card.Title>
-          <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
+          <Form onSubmit={formik.handleSubmit} className='col-12 col-md-6 mb-4'>
             <Form.Group>
               <Form.Control
-                className="mb-3"
-                type="username"
-                name="username"
+                className='mb-3'
+                type='username'
+                name='username'
                 placeholder={t('logInPage.nicknameInput')}
                 required
                 value={formik.values.username}
@@ -68,9 +67,9 @@ const LoginPage = () => {
             </Form.Group>
             <Form.Group>
               <Form.Control
-                className="mb-3"
-                type="password"
-                name="password"
+                className='mb-3'
+                type='password'
+                name='password'
                 placeholder={t('password')}
                 required
                 value={formik.values.password}
@@ -78,21 +77,17 @@ const LoginPage = () => {
                 isInvalid={authFailed}
               />
             </Form.Group>
-            {authFailed && <div className="text-danger">{t('logInPage.error')}</div>}
+            {authFailed && <div className='text-danger'>{t('logInPage.error')}</div>}
             <Button
-              type="submit"
-              className="w-100 mb-3"
-              variant="outline-primary"
+              type='submit'
+              className='w-100 mb-3'
+              variant='outline-primary'
             >
               {t('logInPage.logIn')}
             </Button>
           </Form>
-          <div className="card-footer text-center">
-            <span>
-              {t('logInPage.noAccount')}
-              ?
-              {' '}
-            </span>
+          <div className='card-footer text-center'>
+            <span>{t('logInPage.noAccount')}? </span>
             <Link as={Link} to={routes.lintToSignup}>{t('registration')}</Link>
           </div>
         </Card.Body>

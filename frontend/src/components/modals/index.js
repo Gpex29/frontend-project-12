@@ -6,7 +6,7 @@ const modals = {
   adding: Add,
   renaming: Rename,
   removing: Remove,
-};
+}
 
 const getModal = (type) => modals[type];
 

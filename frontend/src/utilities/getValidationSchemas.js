@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { useTranslation } from 'react-i18next';
 import { selectors } from '../slices/channelsSlice';
+import { useTranslation } from 'react-i18next';
 
 export const getChannelSchema = () => {
   const channels = useSelector(selectors.selectAll);

@@ -32,7 +32,7 @@ const ru = {
         count_few: '{{count}} сообщения',
         count_many: '{{count}} сообщений',
 
-      },
+      }
     },
     modals: {
       addChannel: 'Добавить канал',
@@ -45,7 +45,7 @@ const ru = {
     errorPage: {
       notFoundPage: 'Страница не найдена',
       youCanPass: 'Но вы можете перейти',
-      onMainPage: 'на главную страницу',
+      onMainPage: 'на главную страницу'
     },
     errors: {
       requiredField: 'Обязательное поле',
@@ -54,7 +54,7 @@ const ru = {
       userExists: 'Такой пользователь уже существует',
       passwordsMustBeEqual: 'Пароли должны совпадать',
       moreSixSymbols: 'Не менее 6 символов',
-    },
-  },
+    }
+  }
 };
 export default ru;

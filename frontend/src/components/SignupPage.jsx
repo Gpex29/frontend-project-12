@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Navbar, Nav, Button, Form, Card,
-} from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { Navbar, Nav, Button, Form, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import routes from '../hooks/routes';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import routes from '../hooks/routes';
 import { logIn, logOut } from '../slices/authSlice';
 import { getRegistrationSchema } from '../utilities/getValidationSchemas';
 
@@ -49,26 +48,26 @@ const SignUpPage = () => {
   });
   return (
     <div>
-      <Navbar className="bg-body-tertiary justify-content-between p-3">
+      <Navbar className='bg-body-tertiary justify-content-between p-3'>
         <Nav.Link as={Link} to={routes.linkToChat}>
           Hexlet Chat
         </Nav.Link>
         {loggedIn && (
-          <Button type="button" className="btn btn-primary" onClick={quit}>
+          <Button type='button' className='btn btn-primary' onClick={quit}>
             {t('logOut')}
           </Button>
         )}
       </Navbar>
       <Card style={{ minWidth: '18rem', maxWidth: '50rem', margin: '2rem' }}>
         <Card.Body>
-          <Card.Title className="card-title text-center mb-4">
+          <Card.Title className='card-title text-center mb-4'>
             {t('registration')}
           </Card.Title>
-          <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
-            <Form.Group className="mb-3">
+          <Form onSubmit={formik.handleSubmit} className='col-12 col-md-6 mb-4'>
+            <Form.Group className='mb-3'>
               <Form.Control
-                type="username"
-                name="username"
+                type='username'
+                name='username'
                 placeholder={t('signUpPage.username')}
                 required
                 value={formik.values.username}
@@ -81,10 +80,10 @@ const SignUpPage = () => {
                 <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
               )}
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Control
-                type="password"
-                name="password"
+                type='password'
+                name='password'
                 placeholder={t('password')}
                 required
                 value={formik.values.password}
@@ -96,31 +95,31 @@ const SignUpPage = () => {
                 <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
               )}
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Control
-                type="passwordConfirm"
-                name="passwordConfirm"
+                type='passwordConfirm'
+                name='passwordConfirm'
                 placeholder={t('signUpPage.passwordConfirm')}
                 required
                 value={formik.values.passwordConfirm}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 isInvalid={
-                  formik.touched.passwordConfirm
-                  && formik.errors.passwordConfirm
+                  formik.touched.passwordConfirm &&
+                  formik.errors.passwordConfirm
                 }
               />
-              {formik.touched.passwordConfirm
-                && formik.errors.passwordConfirm && (
+              {formik.touched.passwordConfirm &&
+                formik.errors.passwordConfirm && (
                   <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirm}</Form.Control.Feedback>
-              )}
-              {registrationFailed && <div className="text-danger">{t('errors.userExists')}</div>}
+                )}
+              {registrationFailed && <div className='text-danger'>{t('errors.userExists')}</div>}
             </Form.Group>
-
+            
             <Button
-              type="submit"
-              className="w-100 mb-3"
-              variant="outline-primary"
+              type='submit'
+              className='w-100 mb-3'
+              variant='outline-primary'
             >
               {t('signUpPage.registrate')}
             </Button>

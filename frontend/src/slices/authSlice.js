@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const authAdapter = createEntityAdapter();
@@ -17,7 +16,7 @@ const authSlice = createSlice({
       state.authHeader = {};
       state.username = null;
     },
-  },
+  }
 });
 
 export const { logIn, logOut } = authSlice.actions;
