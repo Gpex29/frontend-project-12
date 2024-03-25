@@ -14,6 +14,9 @@ deploy:
 	git push heroku main
 
 start:
+	make start-backend
+
+local-start:
 	make start-backend & make start-frontend
 
 build:
