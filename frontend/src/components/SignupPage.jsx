@@ -66,10 +66,10 @@ const SignUpPage = () => {
           </Card.Title>
           <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
             <Form.Group className="mb-3">
+              <Form.Label className="form-label" for="username">{t('signUpPage.username')}</Form.Label>
               <Form.Control
                 type="username"
                 name="username"
-                placeholder={t('signUpPage.username')}
                 required
                 value={formik.values.username}
                 onBlur={formik.handleBlur}
@@ -82,10 +82,10 @@ const SignUpPage = () => {
               )}
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label className="form-label" for="password">{t('password')}</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
-                placeholder={t('password')}
                 required
                 value={formik.values.password}
                 onBlur={formik.handleBlur}
@@ -97,10 +97,10 @@ const SignUpPage = () => {
               )}
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label className="form-label" for="passwordConfirm">{t('signUpPage.passwordConfirm')}</Form.Label>
               <Form.Control
                 type="passwordConfirm"
                 name="passwordConfirm"
-                placeholder={t('signUpPage.passwordConfirm')}
                 required
                 value={formik.values.passwordConfirm}
                 onChange={formik.handleChange}
