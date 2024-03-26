@@ -54,10 +54,12 @@ const LoginPage = () => {
           </Card.Title>
           <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
             <Form.Group>
+              <Form.Label htmlFor="username">{t('logInPage.nicknameInput')}</Form.Label>
               <Form.Control
                 className="mb-3"
                 type="username"
                 name="username"
+                id="username"
                 placeholder={t('logInPage.nicknameInput')}
                 required
                 value={formik.values.username}
@@ -67,10 +69,12 @@ const LoginPage = () => {
               />
             </Form.Group>
             <Form.Group>
+              <Form.Label htmlFor="password">{t('password')}</Form.Label>
               <Form.Control
                 className="mb-3"
                 type="password"
                 name="password"
+                id="password"
                 placeholder={t('password')}
                 required
                 value={formik.values.password}
