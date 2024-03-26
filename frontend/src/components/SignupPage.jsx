@@ -66,9 +66,11 @@ const SignUpPage = () => {
           </Card.Title>
           <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
             <Form.Group className="mb-3">
+              <Form.Label htmlFor="username">{t('signUpPage.username')}</Form.Label>
               <Form.Control
                 type="username"
                 name="username"
+                id="username"
                 autoComplete="username"
                 placeholder={t('signUpPage.username')}
                 required
@@ -78,15 +80,16 @@ const SignUpPage = () => {
                 isInvalid={formik.touched.username && formik.errors.username}
                 ref={inputRef}
               />
-              <Form.Label className="form-label" htmlFor="username">{t('signUpPage.username')}</Form.Label>
               {formik.touched.username && formik.errors.username && (
                 <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
               )}
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label htmlFor="password">{t('password')}</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
+                id="password"
                 placeholder={t('password')}
                 required
                 value={formik.values.password}
@@ -94,15 +97,16 @@ const SignUpPage = () => {
                 onChange={formik.handleChange}
                 isInvalid={formik.touched.password && formik.errors.password}
               />
-              <Form.Label className="form-label" htmlFor="password">{t('password')}</Form.Label>
               {formik.touched.password && formik.errors.password && (
                 <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
               )}
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label htmlFor="passwordConfirm">{t('signUpPage.passwordConfirm')}</Form.Label>
               <Form.Control
                 type="passwordConfirm"
                 name="passwordConfirm"
+                id="passwordConfirm"
                 placeholder={t('signUpPage.passwordConfirm')}
                 required
                 value={formik.values.passwordConfirm}
@@ -113,7 +117,6 @@ const SignUpPage = () => {
                   && formik.errors.passwordConfirm
                 }
               />
-              <Form.Label className="form-label" htmlFor="passwordConfirm">{t('signUpPage.passwordConfirm')}</Form.Label>
               {formik.touched.passwordConfirm
                 && formik.errors.passwordConfirm && (
                   <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirm}</Form.Control.Feedback>
