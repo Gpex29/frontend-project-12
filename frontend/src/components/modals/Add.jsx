@@ -21,17 +21,17 @@ const Add = ({ onHide }) => {
   const formik = useFormik({
     initialValues: { name: '' },
     onSubmit:
-    (values) => {
-      const channel = { name: values.name };
+    async (values) => {
       try {
-        axios.post(routes.channelsPath(), channel, {
+        const channel = { name: values.name };
+        await axios.post(routes.channelsPath(), channel, {
           headers: getAuthHeader(),
         });
         toast.success(t('toasts.addChannel'));
+        onHide();
       } catch (err) {
         console.log(err);
       }
-      onHide();
     },
     validationSchema: getChannelSchema(),
   });
