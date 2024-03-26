@@ -79,6 +79,7 @@ const Channels = ({
               <SplitButton
                 id={id}
                 variant={currentChannelId === id ? 'secondary' : 'light'}
+                name={name}
                 title={` #${name}`}
                 className={cn(buttonClasses, {
                   'btn-secondary': currentChannelId === id,
