@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
+import getToast from '../../utilities/getToast';
 
 const Add = ({ onHide }) => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const Add = ({ onHide }) => {
         headers: getAuthHeader(),
       });
       onHide();
+      getToast('addChannel', t);
     },
     validationSchema: getChannelSchema(),
   });

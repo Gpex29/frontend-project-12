@@ -22,7 +22,6 @@ const Channels = ({
   useEffect(() => {
     socket.on('newChannel', ({ name, removable, id }) => {
       const filtredName = filter.clean(name);
-      getToast('addChannel', t);
       dispatch(actions.addChannel({ name: filtredName, removable, id }));
       chooseChannel(id);
     });
