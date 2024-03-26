@@ -5,10 +5,10 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
-import getToast from '../../utilities/getToast';
 
 const Add = ({ onHide }) => {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ const Add = ({ onHide }) => {
         axios.post(routes.channelsPath(), channel, {
           headers: getAuthHeader(),
         });
-        getToast('addChannel', t);
+        toast.success(t('toasts.addChannel'));
       } catch (err) {
         console.log(err);
       }
