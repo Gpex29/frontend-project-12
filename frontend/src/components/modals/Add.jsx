@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
+import getToast from '../../utilities/getToast';
 
 const Add = ({ onHide }) => {
   const { t } = useTranslation();
@@ -22,9 +23,14 @@ const Add = ({ onHide }) => {
     onSubmit:
     (values) => {
       const channel = { name: values.name };
-      axios.post(routes.channelsPath(), channel, {
-        headers: getAuthHeader(),
-      });
+      try {
+        axios.post(routes.channelsPath(), channel, {
+          headers: getAuthHeader(),
+        });
+        getToast('addChannel', t);
+      } catch (err) {
+        console.log(err);
+      }
       onHide();
     },
     validationSchema: getChannelSchema(),
