@@ -72,6 +72,7 @@ const Messages = ({ currentChannelId, socket, filter }) => {
           <form onSubmit={handleSubmit} style={{ width: '100%' }}>
             <input
               type="text"
+              aria-label="Новое сообщение"
               value={text}
               onChange={handleChange}
               style={{ width: '90%' }}
