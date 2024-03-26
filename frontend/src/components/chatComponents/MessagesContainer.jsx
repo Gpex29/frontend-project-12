@@ -53,7 +53,7 @@ const Messages = ({ currentChannelId, socket, filter }) => {
     <div className="d-flex flex-column p-o h-100" style={{ width: '80%' }}>
       <div className="mt-1 ml-3 d-flex flex-column ps-4 pe-2">
         <b>
-          #
+          {'# '}
           {currentChannelName}
         </b>
         <span className="text-muted ">{t('chatPage.messagesCounter.count', { count: currentMessages.length })}</span>
@@ -61,8 +61,11 @@ const Messages = ({ currentChannelId, socket, filter }) => {
       <div id="messages-box" className="chat-messages overflow-auto px-5">
         {currentMessages.map((message) => (
           <div key={message.id} className="text-break mb-2">
-            <b>{message.username}</b>
-            :
+            <b>
+              {message.username}
+              :
+              {' '}
+            </b>
             {message.body}
           </div>
         ))}
