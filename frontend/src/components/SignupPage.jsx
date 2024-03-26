@@ -121,7 +121,6 @@ const SignUpPage = () => {
               type="submit"
               className="w-100 mb-3"
               variant="outline-primary"
-              name="general"
             >
               {t('signUpPage.registrate')}
             </Button>

@@ -61,10 +61,7 @@ const Channels = ({
       </div>
       <ul id="channels-box" className="mb-3 px-2 h-100 d-flex flex-column ">
         {channels.map(({ id, name, removable }) => (
-          <li
-            key={id}
-            style={{ listStyle: 'none' }}
-          >
+          <li key={id} style={{ listStyle: 'none' }}>
             {!removable ? (
               <button
                 type="button"
@@ -74,8 +71,7 @@ const Channels = ({
                 })}
                 onClick={() => chooseChannel(id)}
               >
-                #
-                {' '}
+                <span className="me-1">#</span>
                 {name}
               </button>
             ) : (
