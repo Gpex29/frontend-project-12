@@ -21,6 +21,7 @@ const Channels = ({
 
   useEffect(() => {
     socket.on('newChannel', ({ name, removable, id }) => {
+      getToast('addChannel', t);
       const filtredName = filter.clean(name);
       dispatch(actions.addChannel({ name: filtredName, removable, id }));
       chooseChannel(id);
@@ -79,7 +80,7 @@ const Channels = ({
                 id={id}
                 variant={currentChannelId === id ? 'secondary' : 'light'}
                 name={name}
-                title={` #${name}`}
+                title={`# ${name}`}
                 className={cn(buttonClasses, {
                   'btn-secondary': currentChannelId === id,
                 })}
