@@ -43,6 +43,7 @@ const Add = ({ onHide }) => {
             <FormControl
               required
               ref={inputRef}
+              id="name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.name}
