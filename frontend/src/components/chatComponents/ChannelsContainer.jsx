@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { actions, selectors } from '../../slices/channelsSlice';
 import RenderModal from '../modals/RenderModal';
-import getToast from '../../utilities/getToast';
 
 const Channels = ({
   currentChannelId, chooseChannel, socket, filter,
@@ -26,12 +25,10 @@ const Channels = ({
       chooseChannel(id);
     });
     socket.on('removeChannel', ({ id }) => {
-      getToast('removeChannel', t);
       chooseChannel('1');
       dispatch(actions.removeChannel(id));
     });
     socket.on('renameChannel', (payload) => {
-      getToast('renameChannel', t);
       const filtredName = filter.clean(payload.name);
       dispatch(
         actions.updateChannel({

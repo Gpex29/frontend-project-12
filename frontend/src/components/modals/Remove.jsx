@@ -2,19 +2,25 @@ import React from 'react';
 import { Modal, FormGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 
 const Remove = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const path = [routes.channelsPath(), modalInfo.item.id].join('/');
-    axios.delete(path, {
-      headers: getAuthHeader(),
-    });
-    onHide();
+    try {
+      const path = [routes.channelsPath(), modalInfo.item.id].join('/');
+      await axios.delete(path, {
+        headers: getAuthHeader(),
+      });
+      toast.success(t('toasts.removeChannel'));
+      onHide();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

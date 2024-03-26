@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import routes from '../../hooks/routes';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
@@ -13,12 +14,13 @@ const Rename = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
   const { item } = modalInfo;
   const formik = useFormik({
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
         const editedChannel = { name: values.name };
-        axios.patch([routes.channelsPath(), values.id].join('/'), editedChannel, {
+        await axios.patch([routes.channelsPath(), values.id].join('/'), editedChannel, {
           headers: getAuthHeader(),
         });
+        toast.success(t('toasts.renameChannel'));
         onHide();
       } catch (error) {
         console.log(error);
