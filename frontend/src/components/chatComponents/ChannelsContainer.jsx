@@ -65,6 +65,7 @@ const Channels = ({
             {!removable ? (
               <button
                 type="button"
+                name={name}
                 id={id}
                 className={cn(buttonClasses, {
                   'btn-secondary': currentChannelId === id,
