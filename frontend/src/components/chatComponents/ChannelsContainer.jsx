@@ -1,25 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { actions, selectors } from '../../slices/channelsSlice';
 import RenderModal from '../modals/RenderModal';
+import ChannelContext from '../../context/ChannelContext';
 
 const Channels = ({
-  currentChannelId, chooseChannel, socket, filter,
+  socket, filter,
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
-
+  const { currentChannelId, chooseChannel } = useContext(ChannelContext);
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
   const showModal = (type, item = null) => setModalInfo({ type, item });
 
-  const { username } = JSON.parse(localStorage.getItem('userId'));
-  console.log(username);
   useEffect(() => {
     socket.on('newChannel', ({ name, removable, id }) => {
       const filtredName = filter.clean(name);
@@ -121,7 +120,7 @@ const Channels = ({
           </li>
         ))}
       </ul>
-      {RenderModal({ modalInfo, hideModal, chooseChannel })}
+      {RenderModal({ modalInfo, hideModal })}
     </div>
   );
 };

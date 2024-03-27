@@ -13,6 +13,7 @@ import { getChannels } from '../slices/channelsSlice.js';
 import { getMessages } from '../slices/messagesSlice.js';
 import { logOut } from '../slices/authSlice.js';
 import getAuthHeader from '../utilities/getAuthHeader.js';
+import ChannelProvider from '../provider/ChannelProvider.jsx';
 
 const ChatPage = () => {
   const [socket, setSocket] = useState(null);
@@ -33,18 +34,15 @@ const ChatPage = () => {
       newSocket.disconnect();
     };
   }, []);
+
   const { t } = useTranslation();
-  const [currentChannelId, setCurrentChannelId] = useState('1');
-  const chooseChannel = (id = '1') => setCurrentChannelId(id);
 
   const quit = () => dispatch(logOut());
 
   return (
     <div className="d-flex flex-column vh-100">
-      {isLoading ? (
-        null
-      ) : (
-        <>
+      {isLoading ? null : (
+        <ChannelProvider>
           <Navbar className="bg-body-tertiary justify-content-between p-3">
             <Nav.Link as={Link} to={routes.linkToChat}>
               Hexlet Chat
@@ -54,19 +52,10 @@ const ChatPage = () => {
             </Button>
           </Navbar>
           <div className="d-flex flex-row h-100 m-4 border">
-            <Channels
-              currentChannelId={currentChannelId}
-              chooseChannel={chooseChannel}
-              socket={socket}
-              filter={filter}
-            />
-            <Messages
-              currentChannelId={currentChannelId}
-              socket={socket}
-              filter={filter}
-            />
+            <Channels socket={socket} filter={filter} />
+            <Messages socket={socket} filter={filter} />
           </div>
-        </>
+        </ChannelProvider>
       )}
     </div>
   );

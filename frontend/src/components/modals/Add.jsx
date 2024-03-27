@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import {
   Modal, FormGroup, FormControl, Form,
@@ -11,12 +11,14 @@ import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
 import { selectors } from '../../slices/channelsSlice';
+import ChannelContext from '../../context/ChannelContext';
 
-const Add = ({ onHide, chooseChannel }) => {
+const Add = ({ onHide }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
   const channels = useSelector(selectors.selectAll);
   const names = channels.map(({ name }) => name);
+  const { chooseChannel } = useContext(ChannelContext);
 
   useEffect(() => {
     inputRef.current.focus();

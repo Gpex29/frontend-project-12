@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -7,19 +9,25 @@ import ArrowSquare from '../../svg/ArrowSquare.jsx';
 import getAuthHeader from '../../utilities/getAuthHeader.js';
 import { selectors, actions } from '../../slices/messagesSlice.js';
 import routes from '../../hooks/routes.js';
+import ChannelContext from '../../context/ChannelContext.js';
 
-const Messages = ({ currentChannelId, socket, filter }) => {
+const Messages = ({ socket, filter }) => {
   const messagesInput = useRef();
   const dispatch = useDispatch();
   const { username } = JSON.parse(localStorage.getItem('userId'));
   const { t } = useTranslation();
   const [text, setText] = useState('');
   const handleChange = (e) => setText(e.target.value);
+  const { currentChannelId } = useContext(ChannelContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const filtredText = filter.clean(text);
-    const newMessage = { body: filtredText, channelId: currentChannelId, username };
+    const newMessage = {
+      body: filtredText,
+      channelId: currentChannelId,
+      username,
+    };
     const authHeader = getAuthHeader();
     axios.post(routes.messagesPath(), newMessage, {
       headers: authHeader,
@@ -56,7 +64,11 @@ const Messages = ({ currentChannelId, socket, filter }) => {
           {'# '}
           {currentChannelName}
         </b>
-        <span className="text-muted ">{t('chatPage.messagesCounter.count', { count: currentMessages.length })}</span>
+        <span className="text-muted ">
+          {t('chatPage.messagesCounter.count', {
+            count: currentMessages.length,
+          })}
+        </span>
       </div>
       <div id="messages-box" className="chat-messages overflow-auto px-5">
         {currentMessages.map((message) => (
@@ -82,7 +94,13 @@ const Messages = ({ currentChannelId, socket, filter }) => {
               ref={messagesInput}
               placeholder={t('chatPage.messageInput')}
             />
-            <button type="submit" disabled={!(text.length > 0)} aria-label="messageButton"><ArrowSquare /></button>
+            <button
+              type="submit"
+              disabled={!(text.length > 0)}
+              aria-label="messageButton"
+            >
+              <ArrowSquare />
+            </button>
           </form>
         </div>
       </div>

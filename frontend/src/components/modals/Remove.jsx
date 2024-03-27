@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Modal, FormGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
+import ChannelContext from '../../context/ChannelContext';
 
-const Remove = ({ onHide, modalInfo, chooseChannel }) => {
+const Remove = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
+  const { chooseChannel } = useContext(ChannelContext);
 
   const removeChannel = async (e) => {
     e.preventDefault();
