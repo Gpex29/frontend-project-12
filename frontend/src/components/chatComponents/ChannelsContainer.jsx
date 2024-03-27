@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Button, Dropdown, SplitButton } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
@@ -24,10 +26,12 @@ const Channels = ({
       dispatch(actions.addChannel({ name: filtredName, removable, id }));
       chooseChannel(id);
     });
+
     socket.on('removeChannel', ({ id }) => {
       chooseChannel('1');
       dispatch(actions.removeChannel(id));
     });
+
     socket.on('renameChannel', (payload) => {
       const filtredName = filter.clean(payload.name);
       dispatch(
@@ -57,7 +61,7 @@ const Channels = ({
       </div>
       <ul id="channels-box" className="mb-3 px-2 h-100 d-flex flex-column ">
         {channels.map(({ id, name, removable }) => (
-          <li key={id} style={{ listStyle: 'none' }}>
+          <li key={id} style={{ listStyle: 'none' }} onClick={() => chooseChannel(id)}>
             {!removable ? (
               <button
                 type="button"
@@ -66,35 +70,30 @@ const Channels = ({
                 className={cn(buttonClasses, {
                   'btn-secondary': currentChannelId === id,
                 })}
-                onClick={() => chooseChannel(id)}
               >
                 <span className="me-1">#</span>
                 {name}
               </button>
             ) : (
-              <SplitButton
-                id={id}
-                variant={currentChannelId === id ? 'secondary' : 'light'}
-                name={name}
-                title={`# ${name}`}
-                className={cn(buttonClasses, {
-                  'btn-secondary': currentChannelId === id,
-                })}
-                onClick={() => chooseChannel(id)}
-              >
-                <Dropdown.Item
-                  eventKey="1"
-                  onClick={() => showModal('removing', { id })}
-                >
-                  {t('remove')}
-                </Dropdown.Item>
-                <Dropdown.Item
-                  eventKey="2"
-                  onClick={() => showModal('renaming', { id })}
-                >
-                  {t('chatPage.rename')}
-                </Dropdown.Item>
-              </SplitButton>
+              <Dropdown as="ButtonGroup">
+                <Button variant={currentChannelId === id ? 'secondary' : 'light'}>{`# ${name}`}</Button>
+                <Dropdown.Toggle split id={id} variant={currentChannelId === id ? 'secondary' : 'light'}><span className="visually-hidden">{t('chatPage.channelManagment')}</span></Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    eventKey="1"
+                    onClick={() => showModal('removing', { id })}
+                  >
+                    {t('remove')}
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="2"
+                    onClick={() => showModal('renaming', { id })}
+                  >
+                    {t('chatPage.rename')}
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             )}
           </li>
         ))}
