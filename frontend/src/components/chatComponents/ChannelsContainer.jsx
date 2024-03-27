@@ -45,7 +45,7 @@ const Channels = ({
     });
   }, []);
 
-  const buttonClasses = ['text-start', 'w-100', 'rounded-0'];
+  const buttonClasses = 'w-100 rounded-0 text-start';
 
   return (
     <div className="d-flex flex-column border" style={{ width: '20%' }}>
@@ -77,7 +77,7 @@ const Channels = ({
             ) : (
               <Dropdown as="ButtonGroup">
                 <div className="d-flex">
-                  <Button variant={currentChannelId !== id ? 'light' : ''} className={cn(buttonClasses, { 'text-truncate btn-secondary': currentChannelId === id })}>{`# ${name}`}</Button>
+                  <button type="button" className={cn(buttonClasses, { 'text-truncate btn btn-secondary': currentChannelId === id, light: currentChannelId !== id })}>{`# ${name}`}</button>
                   <Dropdown.Toggle split id={id} className="rounded-start-0" variant={currentChannelId === id ? 'secondary' : 'light'}><span className="visually-hidden">{t('chatPage.channelManagment')}</span></Dropdown.Toggle>
                 </div>
                 <Dropdown.Menu>
