@@ -6,13 +6,17 @@ import {
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
+import { selectors } from '../../slices/channelsSlice';
 
 const Add = ({ onHide, chooseChannel }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
+  const channels = useSelector(selectors.selectAll);
+  const names = channels.map(({ name }) => name);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -34,7 +38,7 @@ const Add = ({ onHide, chooseChannel }) => {
         console.log(err);
       }
     },
-    validationSchema: getChannelSchema(),
+    validationSchema: getChannelSchema(names, t),
   });
 
   return (

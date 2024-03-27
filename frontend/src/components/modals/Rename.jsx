@@ -6,13 +6,18 @@ import {
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import routes from '../../hooks/routes';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
+import { selectors } from '../../slices/channelsSlice';
 
 const Rename = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
   const { item } = modalInfo;
+  const channels = useSelector(selectors.selectAll);
+  const names = channels.map(({ name }) => name);
+
   const formik = useFormik({
     onSubmit: async (values) => {
       try {
@@ -27,7 +32,7 @@ const Rename = ({ onHide, modalInfo }) => {
       }
     },
     initialValues: { id: item.id, name: '' },
-    validationSchema: getChannelSchema(),
+    validationSchema: getChannelSchema(names, t),
   });
   const inputRef = useRef();
   useEffect(() => {

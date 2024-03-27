@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
@@ -61,15 +59,20 @@ const Channels = ({
       </div>
       <ul id="channels-box" className="mb-3 px-2 h-100 d-flex flex-column">
         {channels.map(({ id, name, removable }) => (
-          <li key={id} style={{ listStyle: 'none' }} onClick={() => chooseChannel(id)}>
+          <li key={id} style={{ listStyle: 'none' }}>
             {!removable ? (
               <button
                 type="button"
                 name={name}
                 id={id}
-                className={cn(buttonClasses, {
-                  'btn-secondary': currentChannelId === id,
-                }, 'btn')}
+                onClick={() => chooseChannel(id)}
+                className={cn(
+                  buttonClasses,
+                  {
+                    'btn-secondary': currentChannelId === id,
+                  },
+                  'btn',
+                )}
               >
                 <span className="me-1">#</span>
                 {name}
@@ -77,8 +80,27 @@ const Channels = ({
             ) : (
               <Dropdown as="ButtonGroup">
                 <div className="d-flex">
-                  <button type="button" className={cn(buttonClasses, { 'text-truncate btn btn-secondary': currentChannelId === id, light: currentChannelId !== id })}>{`# ${name}`}</button>
-                  <Dropdown.Toggle split id={id} className="rounded-start-0" variant={currentChannelId === id ? 'secondary' : 'light'}><span className="visually-hidden">{t('chatPage.channelManagment')}</span></Dropdown.Toggle>
+                  <button
+                    type="button"
+                    onClick={() => chooseChannel(id)}
+                    className={cn(buttonClasses, {
+                      'text-truncate btn btn-secondary':
+                        currentChannelId === id,
+                      light: currentChannelId !== id,
+                    })}
+                  >
+                    {`# ${name}`}
+                  </button>
+                  <Dropdown.Toggle
+                    split
+                    id={id}
+                    className="rounded-start-0"
+                    variant={currentChannelId === id ? 'secondary' : 'light'}
+                  >
+                    <span className="visually-hidden">
+                      {t('chatPage.channelManagment')}
+                    </span>
+                  </Dropdown.Toggle>
                 </div>
                 <Dropdown.Menu>
                   <Dropdown.Item

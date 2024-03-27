@@ -30,7 +30,7 @@ const SignUpPage = () => {
       password: '',
       passwordConfirm: '',
     },
-    validationSchema: getRegistrationSchema(),
+    validationSchema: getRegistrationSchema(t),
     onSubmit: async ({ username, password }) => {
       dispatch(logOut());
       try {
