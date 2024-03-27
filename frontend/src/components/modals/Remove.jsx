@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 
-const Remove = ({ onHide, modalInfo }) => {
+const Remove = ({ onHide, modalInfo, chooseChannel }) => {
   const { t } = useTranslation();
 
   const removeChannel = async (e) => {
@@ -18,6 +18,7 @@ const Remove = ({ onHide, modalInfo }) => {
       });
       toast.success(t('toasts.removeChannel'));
       onHide();
+      chooseChannel('1');
     } catch (err) {
       console.log(err);
     }

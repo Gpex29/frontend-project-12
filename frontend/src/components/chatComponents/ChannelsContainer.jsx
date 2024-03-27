@@ -20,15 +20,15 @@ const Channels = ({
   const hideModal = () => setModalInfo({ type: null, item: null });
   const showModal = (type, item = null) => setModalInfo({ type, item });
 
+  const { username } = JSON.parse(localStorage.getItem('userId'));
+  console.log(username);
   useEffect(() => {
     socket.on('newChannel', ({ name, removable, id }) => {
       const filtredName = filter.clean(name);
       dispatch(actions.addChannel({ name: filtredName, removable, id }));
-      chooseChannel(id);
     });
 
     socket.on('removeChannel', ({ id }) => {
-      chooseChannel('1');
       dispatch(actions.removeChannel(id));
     });
 
@@ -69,7 +69,7 @@ const Channels = ({
                 id={id}
                 className={cn(buttonClasses, {
                   'btn-secondary': currentChannelId === id,
-                })}
+                }, 'btn')}
               >
                 <span className="me-1">#</span>
                 {name}
@@ -99,7 +99,7 @@ const Channels = ({
           </li>
         ))}
       </ul>
-      {RenderModal({ modalInfo, hideModal })}
+      {RenderModal({ modalInfo, hideModal, chooseChannel })}
     </div>
   );
 };

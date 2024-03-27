@@ -10,7 +10,7 @@ import routes from '../../hooks/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
 
-const Add = ({ onHide }) => {
+const Add = ({ onHide, chooseChannel }) => {
   const { t } = useTranslation();
   const inputRef = useRef();
 
@@ -24,11 +24,12 @@ const Add = ({ onHide }) => {
     async (values) => {
       try {
         const channel = { name: values.name };
-        await axios.post(routes.channelsPath(), channel, {
+        const response = await axios.post(routes.channelsPath(), channel, {
           headers: getAuthHeader(),
         });
         toast.success(t('toasts.addChannel'));
         onHide();
+        chooseChannel(response.data.id);
       } catch (err) {
         console.log(err);
       }
