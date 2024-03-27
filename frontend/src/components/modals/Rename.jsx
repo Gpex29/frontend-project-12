@@ -43,8 +43,10 @@ const Rename = ({ onHide, modalInfo }) => {
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup onSubmit={formik.handleSubmit}>
+            <Form.Label className="visually-hidden" htmlFor="name">{t('modals.channelsName')}</Form.Label>
             <FormControl
               required
+              id="name"
               ref={inputRef}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
