@@ -9,7 +9,7 @@ import getAuthHeader from '../../utilities/getAuthHeader';
 const Remove = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
 
-  const handleSubmit = async (e) => {
+  const removeChannel = async (e) => {
     e.preventDefault();
     try {
       const path = [routes.channelsPath(), modalInfo.item.id].join('/');
@@ -34,19 +34,22 @@ const Remove = ({ onHide, modalInfo }) => {
           {t('modals.sure')}
           ?
         </p>
-        <form onSubmit={handleSubmit} className="d-flex justify-content-end">
+        <form className="d-flex justify-content-end">
           <FormGroup>
-            <input
+            <button
               type="button"
               onClick={onHide}
               className="btn btn-secondary mt-2 me-2"
-              value={t('modals.cancel')}
-            />
-            <input
-              type="submit"
+            >
+              {t('modals.cancel')}
+            </button>
+            <button
+              type="button"
               className="btn btn-danger mt-2"
-              value={t('remove')}
-            />
+              onClick={removeChannel}
+            >
+              {t('remove')}
+            </button>
           </FormGroup>
         </form>
       </Modal.Body>
