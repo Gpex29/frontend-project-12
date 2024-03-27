@@ -45,7 +45,7 @@ const Channels = ({
     });
   }, []);
 
-  const buttonClasses = ['btn', 'text-start', 'w-100', 'rounded-0', 'light'];
+  const buttonClasses = ['text-start', 'w-100', 'rounded-0'];
 
   return (
     <div className="d-flex flex-column border" style={{ width: '20%' }}>
@@ -59,7 +59,7 @@ const Channels = ({
           {t('chatPage.addButton')}
         </Button>
       </div>
-      <ul id="channels-box" className="mb-3 px-2 h-100 d-flex flex-column ">
+      <ul id="channels-box" className="mb-3 px-2 h-100 d-flex flex-column">
         {channels.map(({ id, name, removable }) => (
           <li key={id} style={{ listStyle: 'none' }} onClick={() => chooseChannel(id)}>
             {!removable ? (
@@ -76,9 +76,10 @@ const Channels = ({
               </button>
             ) : (
               <Dropdown as="ButtonGroup">
-                <Button variant={currentChannelId === id ? 'secondary' : 'light'}>{`# ${name}`}</Button>
-                <Dropdown.Toggle split id={id} variant={currentChannelId === id ? 'secondary' : 'light'}><span className="visually-hidden">{t('chatPage.channelManagment')}</span></Dropdown.Toggle>
-
+                <div className="d-flex">
+                  <Button variant={currentChannelId !== id ? 'light' : ''} className={cn(buttonClasses, { 'text-truncate btn-secondary': currentChannelId === id })}>{`# ${name}`}</Button>
+                  <Dropdown.Toggle split id={id} className="rounded-start-0" variant={currentChannelId === id ? 'secondary' : 'light'}><span className="visually-hidden">{t('chatPage.channelManagment')}</span></Dropdown.Toggle>
+                </div>
                 <Dropdown.Menu>
                   <Dropdown.Item
                     eventKey="1"
