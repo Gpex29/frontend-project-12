@@ -6,17 +6,21 @@ import {
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import routes from '../../routes/routes';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
 import { selectors } from '../../slices/channelsSlice';
+import { hideModal } from '../../slices/modalsSlice';
 
-const Rename = ({ onHide, modalInfo }) => {
+const Rename = () => {
   const { t } = useTranslation();
-  const { item } = modalInfo;
+  const modalInfo = useSelector((state) => state.modals);
+  const { id } = modalInfo;
   const channels = useSelector(selectors.selectAll);
   const names = channels.map(({ name }) => name);
+  const dispatch = useDispatch();
+  const onHide = () => dispatch(hideModal());
 
   const formik = useFormik({
     onSubmit: async (values) => {
@@ -31,7 +35,7 @@ const Rename = ({ onHide, modalInfo }) => {
         console.log(error);
       }
     },
-    initialValues: { id: item.id, name: '' },
+    initialValues: { id, name: '' },
     validationSchema: getChannelSchema(names, t),
   });
   const inputRef = useRef();

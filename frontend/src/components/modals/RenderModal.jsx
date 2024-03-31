@@ -1,12 +1,15 @@
+import { useSelector } from 'react-redux';
 import getModal from '.';
 
-const RenderModal = ({ modalInfo, hideModal, chooseChannel }) => {
+const RenderSliceModal = () => {
+  const modalInfo = useSelector((state) => state.modals);
+  console.log(modalInfo);
   if (!modalInfo.type) {
     return null;
   }
 
   const Component = getModal(modalInfo.type);
-  return <Component modalInfo={modalInfo} onHide={hideModal} chooseChannel={chooseChannel} />;
+  return <Component />;
 };
 
-export default RenderModal;
+export default RenderSliceModal;

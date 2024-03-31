@@ -6,19 +6,23 @@ import {
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import routes from '../../routes/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
 import { selectors } from '../../slices/channelsSlice';
 import ChannelContext from '../../context/ChannelContext';
+import { hideModal } from '../../slices/modalsSlice';
 
-const Add = ({ onHide }) => {
+const Add = () => {
   const { t } = useTranslation();
   const inputRef = useRef();
   const channels = useSelector(selectors.selectAll);
   const names = channels.map(({ name }) => name);
   const { chooseChannel } = useContext(ChannelContext);
+
+  const dispatch = useDispatch();
+  const onHide = () => dispatch(hideModal());
 
   useEffect(() => {
     inputRef.current.focus();

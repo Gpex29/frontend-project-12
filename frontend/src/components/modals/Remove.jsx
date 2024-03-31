@@ -3,18 +3,23 @@ import { Modal, FormGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 import routes from '../../routes/routes';
 import getAuthHeader from '../../utilities/getAuthHeader';
 import ChannelContext from '../../context/ChannelContext';
+import { hideModal } from '../../slices/modalsSlice';
 
-const Remove = ({ onHide, modalInfo }) => {
+const Remove = () => {
   const { t } = useTranslation();
   const { chooseChannel } = useContext(ChannelContext);
+  const dispatch = useDispatch();
+  const onHide = () => dispatch(hideModal());
+  const modalInfo = useSelector((state) => state.modals);
 
   const removeChannel = async (e) => {
     e.preventDefault();
     try {
-      const path = [routes.channelsPath(), modalInfo.item.id].join('/');
+      const path = [routes.channelsPath(), modalInfo.id].join('/');
       await axios.delete(path, {
         headers: getAuthHeader(),
       });

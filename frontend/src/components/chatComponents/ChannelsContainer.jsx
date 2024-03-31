@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import cn from 'classnames';
 import { actions, selectors } from '../../slices/channelsSlice';
 import RenderModal from '../modals/RenderModal';
 import ChannelContext from '../../context/ChannelContext';
+import { showModal } from '../../slices/modalsSlice';
 
 const Channels = ({
   socket, filter,
@@ -15,9 +16,9 @@ const Channels = ({
   const dispatch = useDispatch();
   const channels = useSelector(selectors.selectAll);
   const { currentChannelId, chooseChannel } = useContext(ChannelContext);
-  const [modalInfo, setModalInfo] = useState({ type: null, item: null });
-  const hideModal = () => setModalInfo({ type: null, item: null });
-  const showModal = (type, item = null) => setModalInfo({ type, item });
+  const onShow = (type, id = null) => {
+    dispatch(showModal({ type, id }));
+  };
 
   useEffect(() => {
     socket.on('newChannel', ({ name, removable, id }) => {
@@ -51,7 +52,7 @@ const Channels = ({
         <Button
           variant="outline-primary"
           className="btn"
-          onClick={() => showModal('adding')}
+          onClick={() => onShow('adding')}
         >
           {t('chatPage.addButton')}
         </Button>
@@ -104,13 +105,13 @@ const Channels = ({
                 <Dropdown.Menu>
                   <Dropdown.Item
                     eventKey="1"
-                    onClick={() => showModal('removing', { id })}
+                    onClick={() => onShow('removing', id)}
                   >
                     {t('remove')}
                   </Dropdown.Item>
                   <Dropdown.Item
                     eventKey="2"
-                    onClick={() => showModal('renaming', { id })}
+                    onClick={() => onShow('renaming', id)}
                   >
                     {t('chatPage.rename')}
                   </Dropdown.Item>
@@ -120,7 +121,7 @@ const Channels = ({
           </li>
         ))}
       </ul>
-      {RenderModal({ modalInfo, hideModal })}
+      {RenderModal()}
     </div>
   );
 };
