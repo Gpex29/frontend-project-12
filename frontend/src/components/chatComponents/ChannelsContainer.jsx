@@ -41,6 +41,12 @@ const Channels = ({
         }),
       );
     });
+
+    return () => {
+      socket.off('newChannel');
+      socket.off('removeChannel');
+      socket.off('renameChannel');
+    };
   }, []);
 
   const buttonClasses = 'w-100 rounded-0 text-start';

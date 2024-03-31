@@ -39,15 +39,12 @@ const Messages = ({ socket, filter }) => {
     socket.on('newMessage', (newMessage) => {
       dispatch(actions.addMessage(newMessage));
     });
-    socket.on('newChannel', () => {
-      messagesInput.current.focus();
-    });
-    socket.on('removeChannel', () => {
-      messagesInput.current.focus();
-    });
-    socket.on('renameChannel', () => {
-      messagesInput.current.focus();
-    });
+
+    messagesInput.current.focus();
+
+    return () => {
+      socket.off('newMessage');
+    };
   }, []);
 
   const channels = useSelector((state) => state.channels);
@@ -96,7 +93,7 @@ const Messages = ({ socket, filter }) => {
             />
             <button
               type="submit"
-              disabled={!(text.length > 0)}
+              disabled={text.length === 0}
               aria-label="messageButton"
             >
               <ArrowSquare />
