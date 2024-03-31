@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import routes from '../hooks/routes';
+import routes from '../routes/routes';
 
 const channelsAdapter = createEntityAdapter();
 

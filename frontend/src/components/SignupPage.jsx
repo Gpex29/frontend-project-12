@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import routes from '../hooks/routes';
+import routes from '../routes/routes';
 import { logIn, logOut } from '../slices/authSlice';
 import { getRegistrationSchema } from '../utilities/getValidationSchemas';
 
@@ -48,8 +48,8 @@ const SignUpPage = () => {
     },
   });
   return (
-    <div>
-      <Navbar className="bg-body-tertiary justify-content-between p-3">
+    <div className="d-flex flex-column vh-100">
+      <Navbar className="bg-body-tertiary justify-content-between p-3 mb-5">
         <Nav.Link as={Link} to={routes.linkToChat}>
           Hexlet Chat
         </Nav.Link>
@@ -59,14 +59,16 @@ const SignUpPage = () => {
           </Button>
         )}
       </Navbar>
-      <Card style={{ minWidth: '18rem', maxWidth: '50rem', margin: '2rem' }}>
-        <Card.Body>
-          <Card.Title className="card-title text-center mb-4">
+      <Card className="justify-content-center align-content-center mx-auto w-50">
+        <Card.Body className="text-center">
+          <Card.Title className="text-center mb-4">
             {t('registration')}
           </Card.Title>
-          <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
+          <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="username">{t('signUpPage.username')}</Form.Label>
+              <Form.Label className="visually-hidden" htmlFor="username">
+                {t('signUpPage.username')}
+              </Form.Label>
               <Form.Control
                 type="username"
                 name="username"
@@ -81,11 +83,15 @@ const SignUpPage = () => {
                 ref={inputRef}
               />
               {formik.touched.username && formik.errors.username && (
-                <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.username}
+                </Form.Control.Feedback>
               )}
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="password">{t('password')}</Form.Label>
+              <Form.Label className="visually-hidden" htmlFor="password">
+                {t('password')}
+              </Form.Label>
               <Form.Control
                 type="password"
                 name="password"
@@ -98,11 +104,15 @@ const SignUpPage = () => {
                 isInvalid={formik.touched.password && formik.errors.password}
               />
               {formik.touched.password && formik.errors.password && (
-                <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.password}
+                </Form.Control.Feedback>
               )}
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label htmlFor="passwordConfirm">{t('signUpPage.passwordConfirm')}</Form.Label>
+              <Form.Label className="visually-hidden" htmlFor="passwordConfirm">
+                {t('signUpPage.passwordConfirm')}
+              </Form.Label>
               <Form.Control
                 type="passwordConfirm"
                 name="passwordConfirm"
@@ -119,9 +129,13 @@ const SignUpPage = () => {
               />
               {formik.touched.passwordConfirm
                 && formik.errors.passwordConfirm && (
-                  <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirm}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.passwordConfirm}
+                  </Form.Control.Feedback>
               )}
-              {registrationFailed && <div className="text-danger">{t('errors.userExists')}</div>}
+              {registrationFailed && (
+                <div className="text-danger">{t('errors.userExists')}</div>
+              )}
             </Form.Group>
 
             <Button

@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import getAuthHeader from '../../utilities/getAuthHeader';
-import routes from '../../hooks/routes';
+import routes from '../../routes/routes';
 import { getChannelSchema } from '../../utilities/getValidationSchemas';
 import { selectors } from '../../slices/channelsSlice';
 

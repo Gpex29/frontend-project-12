@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
 import * as filter from 'leo-profanity';
-import routes from '../hooks/routes.js';
+import routes from '../routes/routes.js';
 import Channels from './chatComponents/ChannelsContainer.jsx';
 import Messages from './chatComponents/MessagesContainer.jsx';
 import { getChannels } from '../slices/channelsSlice.js';

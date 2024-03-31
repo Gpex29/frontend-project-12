@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import routes from '../hooks/routes.js';
+import routes from '../routes/routes.js';
 import { logIn, logOut } from '../slices/authSlice.js';
 
 const LoginPage = () => {
@@ -41,64 +41,74 @@ const LoginPage = () => {
     },
   });
   return (
-    <div>
-      <Navbar className="bg-body-tertiary justify-content-between p-3">
+    <div className="d-flex flex-column vh-100">
+      <Navbar className="bg-body-tertiary justify-content-between p-3  mb-5">
         <Nav.Link as={Link} to={routes.linkToChat}>
           Hexlet Chat
         </Nav.Link>
       </Navbar>
-      <Card style={{ minWidth: '18rem', maxWidth: '50rem', margin: '2rem' }}>
+      <Card className="justify-content-center align-content-center mx-auto w-50">
         <Card.Body>
-          <Card.Title className="card-title text-center mb-4">
+          <Card.Title className="text-center mb-4">
             {t('logInPage.logIn')}
           </Card.Title>
-          <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mb-4">
-            <Form.Group>
-              <Form.Label htmlFor="username">{t('logInPage.nicknameInput')}</Form.Label>
-              <Form.Control
-                className="mb-3"
-                type="username"
-                name="username"
-                id="username"
-                placeholder={t('logInPage.nicknameInput')}
-                required
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                isInvalid={authFailed}
-                ref={inputRef}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="password">{t('password')}</Form.Label>
-              <Form.Control
-                className="mb-3"
-                type="password"
-                name="password"
-                id="password"
-                placeholder={t('password')}
-                required
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                isInvalid={authFailed}
-              />
-            </Form.Group>
-            {authFailed && <div className="text-danger">{t('logInPage.error')}</div>}
-            <Button
-              type="submit"
-              className="w-100 mb-3"
-              variant="outline-primary"
-            >
-              {t('logInPage.logIn')}
-            </Button>
-          </Form>
-          <div className="card-footer text-center">
-            <span>
-              {t('logInPage.noAccount')}
-              ?
-              {' '}
-            </span>
-            <Link as={Link} to={routes.lintToSignup}>{t('registration')}</Link>
-          </div>
+          <Card.Text>
+            <Form onSubmit={formik.handleSubmit}>
+              <Form.Group>
+                <Form.Label className="visually-hidden" htmlFor="username">
+                  {t('logInPage.nicknameInput')}
+                </Form.Label>
+                <Form.Control
+                  className="mb-3"
+                  type="username"
+                  name="username"
+                  id="username"
+                  placeholder={t('logInPage.nicknameInput')}
+                  required
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  isInvalid={authFailed}
+                  ref={inputRef}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label className="visually-hidden" htmlFor="password">
+                  {t('password')}
+                </Form.Label>
+                <Form.Control
+                  className="mb-3"
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder={t('password')}
+                  required
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  isInvalid={authFailed}
+                />
+              </Form.Group>
+              {authFailed && (
+                <div className="text-danger">{t('logInPage.error')}</div>
+              )}
+              <Button
+                type="submit"
+                className="w-100 mb-3"
+                variant="outline-primary"
+              >
+                {t('logInPage.logIn')}
+              </Button>
+            </Form>
+            <div className="card-footer text-center">
+              <span>
+                {t('logInPage.noAccount')}
+                ?
+                {' '}
+              </span>
+              <Link as={Link} to={routes.lintToSignup}>
+                {t('registration')}
+              </Link>
+            </div>
+          </Card.Text>
         </Card.Body>
       </Card>
     </div>

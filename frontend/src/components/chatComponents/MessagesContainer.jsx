@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import ArrowSquare from '../../svg/ArrowSquare.jsx';
 import getAuthHeader from '../../utilities/getAuthHeader.js';
 import { selectors, actions } from '../../slices/messagesSlice.js';
-import routes from '../../hooks/routes.js';
+import routes from '../../routes/routes.js';
 import ChannelContext from '../../context/ChannelContext.js';
 
 const Messages = ({ socket, filter }) => {

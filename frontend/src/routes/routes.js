@@ -8,4 +8,5 @@ export default {
   linkToChat: '/',
   linkToLogin: '/login',
   lintToSignup: '/signup',
+  linkToNotFound: '*',
 };

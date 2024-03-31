@@ -17,7 +17,7 @@ import ErrorPage from './components/ErrorPage.jsx';
 import SignupPage from './components/SignupPage.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import ChatPage from './components/ChatPage.jsx';
-import routes from './hooks/routes.js';
+import routes from './routes/routes.js';
 import store from './slices/index.js';
 
 injectStyle();
@@ -28,7 +28,7 @@ const ChatRoute = ({ children }) => {
   return loggedIn ? (
     children
   ) : (
-    <Navigate to="/login" state={{ from: location }} />
+    <Navigate to={routes.linkToLogin} state={{ from: location }} />
   );
 };
 
@@ -39,7 +39,9 @@ const App = async () => {
     resources,
     fallbackLng: 'ru',
   });
-  const { linkToChat, linkToLogin, lintToSignup } = routes;
+  const {
+    linkToChat, linkToLogin, lintToSignup, linkToNotFound,
+  } = routes;
 
   const rollbarConfig = {
     accessToken: 'f0dadba7b40443728eba62dc65c3d73d',
@@ -63,7 +65,7 @@ const App = async () => {
                     </ChatRoute>
                   )}
                 />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path={linkToNotFound} element={<ErrorPage />} />
               </Routes>
               <ToastContainer />
             </BrowserRouter>
