@@ -31,8 +31,7 @@ const LoginPage = () => {
       dispatch(logOut());
       try {
         const { data } = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('userId', JSON.stringify(data));
-        dispatch(logIn());
+        dispatch(logIn({ data }));
         navigate(routes.linkToChat);
       } catch (error) {
         console.log(error);

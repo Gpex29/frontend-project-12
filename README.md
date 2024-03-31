@@ -32,10 +32,10 @@ make local-start
 
 ### Technologies used:
 
-React
-React-bootstrap
-React-redux
-React-i18next
-React-router
-Socket.io
-Axios
+  - React
+  - React-bootstrap
+  - React-redux
+  - React-i18next
+  - React-router
+  - Socket.io
+  - Axios

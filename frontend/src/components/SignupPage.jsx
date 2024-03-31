@@ -39,8 +39,7 @@ const SignUpPage = () => {
           username,
           password,
         });
-        localStorage.setItem('userId', JSON.stringify(data));
-        dispatch(logIn());
+        dispatch(logIn({ data }));
         navigate(routes.linkToChat);
       } catch (error) {
         setRegistrationFailed(true);

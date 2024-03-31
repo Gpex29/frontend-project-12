@@ -13,8 +13,8 @@ const modalsSlice = createSlice({
       state.type = null;
       state.id = null;
     },
-    showModal: (state, action) => {
-      const { type, id } = action.payload;
+    showModal: (state, { payload }) => {
+      const { type, id } = payload;
       state.type = type;
       state.id = id;
     },
