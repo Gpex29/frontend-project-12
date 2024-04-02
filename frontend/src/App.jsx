@@ -44,7 +44,7 @@ const App = async () => {
   } = routes;
 
   const rollbarConfig = {
-    accessToken: 'f0dadba7b40443728eba62dc65c3d73d',
+    accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
     environment: 'testenv',
   };
 
