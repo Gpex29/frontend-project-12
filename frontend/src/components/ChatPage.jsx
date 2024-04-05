@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,12 +20,13 @@ const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   filter.add(filter.getDictionary('ru'));
+  const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   useEffect(() => {
     setIsLoading(true);
-    dispatch(getChannels(getAuthHeader()));
-    dispatch(getMessages(getAuthHeader()));
+    dispatch(getChannels(getAuthHeader(token)));
+    dispatch(getMessages(getAuthHeader(token)));
     setIsLoading(false);
     const newSocket = io();
     setSocket(newSocket);

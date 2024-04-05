@@ -14,7 +14,7 @@ import ChannelContext from '../../context/ChannelContext.js';
 const Messages = ({ socket, filter }) => {
   const messagesInput = useRef();
   const dispatch = useDispatch();
-  const { username } = JSON.parse(localStorage.getItem('userId'));
+  const { username, token } = useSelector((state) => state.auth);
   const { t } = useTranslation();
   const [text, setText] = useState('');
   const handleChange = (e) => setText(e.target.value);
@@ -28,7 +28,7 @@ const Messages = ({ socket, filter }) => {
       channelId: currentChannelId,
       username,
     };
-    const authHeader = getAuthHeader();
+    const authHeader = getAuthHeader(token);
     axios.post(routes.messagesPath(), newMessage, {
       headers: authHeader,
     });

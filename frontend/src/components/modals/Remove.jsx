@@ -15,13 +15,14 @@ const Remove = () => {
   const dispatch = useDispatch();
   const onHide = () => dispatch(hideModal());
   const modalInfo = useSelector((state) => state.modals);
+  const { token } = useSelector((state) => state.auth);
 
   const removeChannel = async (e) => {
     e.preventDefault();
     try {
       const path = [routes.channelsPath(), modalInfo.id].join('/');
       await axios.delete(path, {
-        headers: getAuthHeader(),
+        headers: getAuthHeader(token),
       });
       toast.success(t('toasts.removeChannel'));
       onHide();

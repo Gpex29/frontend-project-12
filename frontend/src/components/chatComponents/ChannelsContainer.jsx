@@ -84,7 +84,7 @@ const Channels = ({
                 {name}
               </button>
             ) : (
-              <Dropdown as="ButtonGroup">
+              <Dropdown>
                 <div className="d-flex">
                   <button
                     type="button"

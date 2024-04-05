@@ -20,6 +20,7 @@ const Add = () => {
   const channels = useSelector(selectors.selectAll);
   const names = channels.map(({ name }) => name);
   const { chooseChannel } = useContext(ChannelContext);
+  const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const onHide = () => dispatch(hideModal());
@@ -35,7 +36,7 @@ const Add = () => {
       try {
         const channel = { name: values.name };
         const response = await axios.post(routes.channelsPath(), channel, {
-          headers: getAuthHeader(),
+          headers: getAuthHeader(token),
         });
         toast.success(t('toasts.addChannel'));
         onHide();

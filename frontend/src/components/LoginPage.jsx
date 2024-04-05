@@ -51,63 +51,61 @@ const LoginPage = () => {
           <Card.Title className="text-center mb-4">
             {t('logInPage.logIn')}
           </Card.Title>
-          <Card.Text>
-            <Form onSubmit={formik.handleSubmit}>
-              <Form.Group>
-                <Form.Label className="visually-hidden" htmlFor="username">
-                  {t('logInPage.nicknameInput')}
-                </Form.Label>
-                <Form.Control
-                  className="mb-3"
-                  type="username"
-                  name="username"
-                  id="username"
-                  placeholder={t('logInPage.nicknameInput')}
-                  required
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  isInvalid={authFailed}
-                  ref={inputRef}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label className="visually-hidden" htmlFor="password">
-                  {t('password')}
-                </Form.Label>
-                <Form.Control
-                  className="mb-3"
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder={t('password')}
-                  required
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  isInvalid={authFailed}
-                />
-              </Form.Group>
-              {authFailed && (
-                <div className="text-danger">{t('logInPage.error')}</div>
-              )}
-              <Button
-                type="submit"
-                className="w-100 mb-3"
-                variant="outline-primary"
-              >
-                {t('logInPage.logIn')}
-              </Button>
-            </Form>
-            <div className="card-footer text-center">
-              <span>
-                {t('logInPage.noAccount')}
-                ?
-                {' '}
-              </span>
-              <Link as={Link} to={routes.lintToSignup}>
-                {t('registration')}
-              </Link>
-            </div>
-          </Card.Text>
+          <Form onSubmit={formik.handleSubmit}>
+            <Form.Group>
+              <Form.Label className="visually-hidden" htmlFor="username">
+                {t('logInPage.nicknameInput')}
+              </Form.Label>
+              <Form.Control
+                className="mb-3"
+                type="username"
+                name="username"
+                id="username"
+                placeholder={t('logInPage.nicknameInput')}
+                required
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                isInvalid={authFailed}
+                ref={inputRef}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className="visually-hidden" htmlFor="password">
+                {t('password')}
+              </Form.Label>
+              <Form.Control
+                className="mb-3"
+                type="password"
+                name="password"
+                id="password"
+                placeholder={t('password')}
+                required
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                isInvalid={authFailed}
+              />
+            </Form.Group>
+            {authFailed && (
+            <div className="text-danger">{t('logInPage.error')}</div>
+            )}
+            <Button
+              type="submit"
+              className="w-100 mb-3"
+              variant="outline-primary"
+            >
+              {t('logInPage.logIn')}
+            </Button>
+          </Form>
+          <div className="card-footer text-center">
+            <span>
+              {t('logInPage.noAccount')}
+              ?
+              {' '}
+            </span>
+            <Link as={Link} to={routes.lintToSignup}>
+              {t('registration')}
+            </Link>
+          </div>
         </Card.Body>
       </Card>
     </div>

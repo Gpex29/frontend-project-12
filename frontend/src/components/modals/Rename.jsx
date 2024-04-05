@@ -18,6 +18,7 @@ const Rename = () => {
   const modalInfo = useSelector((state) => state.modals);
   const { id } = modalInfo;
   const channels = useSelector(selectors.selectAll);
+  const { token } = useSelector((state) => state.auth);
   const names = channels.map(({ name }) => name);
   const dispatch = useDispatch();
   const onHide = () => dispatch(hideModal());
@@ -27,7 +28,7 @@ const Rename = () => {
       try {
         const editedChannel = { name: values.name };
         await axios.patch([routes.channelsPath(), values.id].join('/'), editedChannel, {
-          headers: getAuthHeader(),
+          headers: getAuthHeader(token),
         });
         toast.success(t('toasts.renameChannel'));
         onHide();
